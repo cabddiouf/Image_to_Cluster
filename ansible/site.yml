@@ -1,0 +1,13 @@
+---
+- name: Deploy custom nginx app on K3d
+  hosts: local
+  gather_facts: false
+
+  tasks:
+    - name: Apply nginx app manifests
+      kubernetes.core.k8s:
+        state: present
+        src: "{{ item }}"
+      loop:
+        - "{{ playbook_dir }}/templates/deployment.yaml"
+        - "{{ playbook_dir }}/templates/service.yaml"
